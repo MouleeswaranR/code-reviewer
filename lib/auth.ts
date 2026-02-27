@@ -16,7 +16,7 @@ export const auth = betterAuth({
             scope:["repo"]
         }
     },
-    trustedOrigins:["http://localhost:3000"," https://leewardly-nontraceable-lester.ngrok-free.dev"],
+    trustedOrigins:["http://localhost:3000"," https://steve-guard-code-reviewer.vercel.app/"],
     plugins:[
         polar({
           client: polarClient,
@@ -25,7 +25,7 @@ export const auth = betterAuth({
                 checkout({
                     products: [
                         {
-                            productId: "576ed072-d909-4fe6-acfc-577784cb8b0b",
+                            productId: "3de4c6d5-607a-4ca4-bd53-171d9cc81729",
                             slug: "pro" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
                         }
                     ],
