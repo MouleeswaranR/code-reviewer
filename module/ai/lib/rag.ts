@@ -6,8 +6,13 @@ import { metadata } from "@/app/layout";
 
 export async function generateEmbedding(text: string) {
   const { embedding } = await embed({
-    model: google.embedding('gemini-embedding-001'),  // ← updated model
+    model: google.embedding('gemini-embedding-001'),
     value: text,
+    providerOptions: {
+      google: {
+        outputDimensionality: 768, 
+      },
+    },
   });
 
   return embedding;
