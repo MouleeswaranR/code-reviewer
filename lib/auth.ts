@@ -16,7 +16,7 @@ export const auth = betterAuth({
             scope: ["repo", "user:email"],
         }
     },
-    trustedOrigins:["http://localhost:3000"," https://steve-guard-code-reviewer.vercel.app/"],
+    trustedOrigins:["https://steve-guard-code-reviewer.vercel.app"], //"http://localhost:3000" if run locally
     plugins:[
         polar({
           client: polarClient,
@@ -25,7 +25,7 @@ export const auth = betterAuth({
                 checkout({
                     products: [
                         {
-                           productId: "3de4c6d5-607a-4ca4-bd53-171d9cc81729",
+                           productId: process.env.POLAR_PRODUCT_ID!,
                             slug: "SteveGuard-AI-Github-Code-Reviewer" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
                         }
                     ],
@@ -33,7 +33,7 @@ export const auth = betterAuth({
                     authenticatedUsersOnly: true
                 }),
                 portal({
-                    returnUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/dashboard"
+                    returnUrl: process.env.NEXT_PUBLIC_APP_BASE_URL|| "http://localhost:3000/dashboard"
                 }),
                 usage(),
                 webhooks({
