@@ -5,6 +5,7 @@ import {polar,checkout,portal,usage,webhooks} from "@polar-sh/better-auth";
 import { polarClient } from "@/module/payment/config/polar";
 import { updatePolarCustomerId, updateUserTier } from "@/module/payment/lib/subscription";
 
+
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql", // or "mysql", "postgresql", ...etc
@@ -16,6 +17,21 @@ export const auth = betterAuth({
             scope: ["repo", "user:email"],
         }
     },
+     events: {
+    async onSignIn({ user }:{user:any}) {
+      if (!user.polarCustomerId) {
+        console.log("Creating Polar customer on login...");
+
+        const customer = await polarClient.customers.create({
+          email: user.email!,
+          name: user.name || undefined,
+        });
+
+        await updatePolarCustomerId(user.id, customer.id);
+      }
+    },
+  },
+
     trustedOrigins:["https://steve-guard-code-reviewer.vercel.app","https://steve-guard-code-reviewer.vercel.app/"], //"http://localhost:3000" if run locally
     plugins:[
         polar({
