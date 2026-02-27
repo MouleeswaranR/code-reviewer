@@ -6,7 +6,7 @@ import { metadata } from "@/app/layout";
 
 export async function generateEmbedding(text: string) {
   const { embedding } = await embed({
-    model: google.embedding("embedding-001"),
+    model: google.embedding("text-embedding-004"),
     value: text,
   });
 
