@@ -5,6 +5,8 @@ import {polar,checkout,portal,usage,webhooks} from "@polar-sh/better-auth";
 import { polarClient } from "@/module/payment/config/polar";
 import { updatePolarCustomerId, updateUserTier } from "@/module/payment/lib/subscription";
 
+console.log("POLAR_PRODUCT_ID:", process.env.POLAR_PRODUCT_ID);
+console.log("POLAR_ACCESS_TOKEN exists:", !!process.env.POLAR_ACCESS_TOKEN);
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -17,20 +19,22 @@ export const auth = betterAuth({
             scope: ["repo", "user:email"],
         }
     },
-     events: {
-    async onSignIn({ user }:{user:any}) {
-      if (!user.polarCustomerId) {
-        console.log("Creating Polar customer on login...");
+    events: {
+        async onSignIn({ user }:{user:any}) {
+            try {
+            if (!user.polarCustomerId) {
+                const customer = await polarClient.customers.create({
+                email: user.email!,
+                name: user.name || undefined,
+                });
 
-        const customer = await polarClient.customers.create({
-          email: user.email!,
-          name: user.name || undefined,
-        });
-
-        await updatePolarCustomerId(user.id, customer.id);
-      }
-    },
-  },
+                await updatePolarCustomerId(user.id, customer.id);
+            }
+            } catch (err) {
+            console.error("Polar customer creation failed:", err);
+            }
+        },
+        },
 
     trustedOrigins:["https://steve-guard-code-reviewer.vercel.app","https://steve-guard-code-reviewer.vercel.app/"], //"http://localhost:3000" if run locally
     plugins:[
