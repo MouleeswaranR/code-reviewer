@@ -25,8 +25,8 @@ export const auth = betterAuth({
                 checkout({
                     products: [
                         {
-                            productId: "3de4c6d5-607a-4ca4-bd53-171d9cc81729",
-                            slug: "steve-guard" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
+                           productId: "3de4c6d5-607a-4ca4-bd53-171d9cc81729",
+                            slug: "SteveGuard-AI-Github-Code-Reviewer" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
                         }
                     ],
                     successUrl: process.env.POLAR_SUCCESS_URL||"/dashboard/subscription?success=true",
