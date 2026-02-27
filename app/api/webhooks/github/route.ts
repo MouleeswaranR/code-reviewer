@@ -19,7 +19,7 @@ export async function POST(req:NextRequest){
             const [owner,repoName]=repo.split("/");
 
             if(action==="opened"||action==="synchronize"){
-              reviewPullRequest(owner, repoName, prNumber)
+             await  reviewPullRequest(owner, repoName, prNumber)
                 .then(() => {
                     console.log(`Review Completed for ${repoName} #${prNumber}`);
                 })

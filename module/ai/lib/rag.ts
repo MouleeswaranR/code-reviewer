@@ -4,13 +4,13 @@ import {google} from "@ai-sdk/google";
 import { metadata } from "@/app/layout";
 
 
-export async function generateEmbedding(text:string){
-    const {embedding}=await embed({
-        model:google.textEmbeddingModel("text-embedding-004"),
-        value:text
-    })
+export async function generateEmbedding(text: string) {
+  const { embedding } = await embed({
+    model: google.embedding("embedding-001"),
+    value: text,
+  });
 
-    return embedding;
+  return embedding;
 }
 
 
