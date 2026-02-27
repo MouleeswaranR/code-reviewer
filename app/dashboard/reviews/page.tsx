@@ -82,7 +82,7 @@ export default function ReviewsPage(){
                                     <div className="prose prose-sm dark:prose-invert max-w-none">
                                         <div className="bg-muted p-4 rounded-lg">
                                             <pre className="whitespace-pre-wrap text-xs">
-                                                {review.review.substring(0,300)}...
+                                                {review.review.replace(/^#{1,6}\s?/gm, "")}
                                             </pre>
                                         </div>
                                     </div>

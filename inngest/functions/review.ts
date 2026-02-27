@@ -67,8 +67,6 @@ export const generateReview=inngest.createFunction(
 
         Respond exactly in this structure:
 
-        ## 🤖 AI Code Review
-
         ### 🔎 Overview
         Short 2-3 sentence explanation.
 
