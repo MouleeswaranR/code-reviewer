@@ -243,7 +243,7 @@ export async function postReviewComment(token:string,owner:string,repo:string,pr
     owner,
     repo,
     issue_number:prNumber,
-    body: `## 🤖 AI Code Review\n\n${review}\n\n---\n*Powered by SteveGuard*`,
+    body: `## 🤖 SteveGuard Code Review\n\n${review}\n\n---\n*Powered by SteveGuard*`,
   })
 
 }

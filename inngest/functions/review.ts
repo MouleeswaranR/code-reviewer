@@ -35,44 +35,76 @@ export const generateReview=inngest.createFunction(
             return await retrieveContext(query,`${owner}/${repo}`)
         })
 
-        const review=await step.run("generate-ai-review",async()=>{
-            const prompt=`
-            You are an expert code reviewer.Analyze the following pull request and provide a detailed, constructive code review.
+        const review = await step.run("generate-ai-review", async () => {
+        const prompt = `
+        You are a senior software engineer performing a professional GitHub pull request review.
 
-            PR Title: ${title}
-            PR Description: ${description||"No description provided"}
+        Write feedback like a real automated reviewer (similar to CodeRabbit).
 
-            Context from Codebase:
-            ${context.join("\n\n")}
+        Rules:
+        - Be concise and professional.
+        - Use bullet points.
+        - Avoid long essays.
+        - Do NOT restate the entire diff.
+        - Keep total output under 400 words.
+        - If no major issues, say so clearly.
+        - Generate a Mermaid diagram ONLY if the change affects logic flow.
+        - Keep Mermaid syntax very simple.
+        - Do NOT use quotes, parentheses, braces, or special characters inside diagram labels.
+        - Use short node names.
+        - If no logical flow change exists, state "No flow change detected" instead of diagram.
 
-            Code Changes:
-            \`\`\`diff
-            ${diff}
-            \`\`\`
+        PR Title: ${title}
+        PR Description: ${description || "No description provided"}
 
-            Please provide:
-            1. **Walkthrough**: A file-by-file explanation of the changes.
-            2. **Sequence Diagram**:  A Mermaid JS sequence diagram visualizing the flow of the changes (if applicable).
-            Use \`\`\`mermaid ... \`\`\ block. **IMPORTANT**: Ensure the Mermaid syntax is valid. Do
-            not use special characters (like quotes, braces,parentheses) inside Note text or labels as it breaks rendering. Keep the daigram simple.
-            3. **Summary**: Brief overview.
-            4. **Strengths**: What's done well.
-            5. **Issues**: Bugs, security concerns, code smells.
-            6. **Suggestions**: Specific code improvements.
-            7. **Poem**: A short, creative poem summarizing the changes at the very end.
+         Context from Codebase:
+        ${context.join("\n\n")}
 
-            Format your response in markdown.`;
+        Code Changes:
+        \`\`\`diff
+        ${diff}
+        \`\`\`
 
-            const {text}=await generateText({
-                model: google("gemini-2.5-flash"),
-                prompt
-            });
+        Respond exactly in this structure:
 
-            console.log(text);
-            
-            return text;
-        })
+        ## 🤖 AI Code Review
 
+        ### 🔎 Overview
+        Short 2-3 sentence explanation.
+
+        ### 🧭 Change Flow
+        If applicable, include:
+
+        \`\`\`mermaid
+        sequenceDiagram
+            User->>App: Request
+            App->>Service: Process
+            Service-->>App: Response
+            App-->>User: Result
+        \`\`\`
+
+        If no flow change, write:
+        No flow change detected.
+
+        ### ✅ What Looks Good
+        - Bullet points
+
+        ### ⚠️ Suggestions
+        - Bullet points
+
+        ### 📌 Verdict
+        Approve / Minor suggestions / Needs clarification
+
+        Keep it clean and production-ready.
+        `;
+
+        const { text } = await generateText({
+            model: google("gemini-2.5-flash"),
+            prompt
+        });
+
+        return text;
+        });
         await step.run("post-comment",async()=>{
             await postReviewComment(token, owner,repo,prNumber,review);
         });
