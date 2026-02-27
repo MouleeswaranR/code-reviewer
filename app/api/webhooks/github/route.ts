@@ -15,17 +15,24 @@ export async function POST(req:NextRequest){
             const action=body.action;
             const repo=body.repository.full_name;
             const prNumber=body.number;
-
+            console.log("Action: ",action);
+            
             const [owner,repoName]=repo.split("/");
-
-            if(action==="opened"||action==="synchronize"){
-             await  reviewPullRequest(owner, repoName, prNumber)
-                .then(() => {
-                    console.log(`Review Completed for ${repoName} #${prNumber}`);
-                })
-                .catch((error) => {
-                    console.log(`Error reviewing ${repoName} #${prNumber}`, error);
-                });
+            
+             const validActions = [
+                    "opened",
+                    "synchronize",
+                    "reopened",
+                    "ready_for_review"
+                ];
+                
+            if(validActions.includes(action)){
+                try {
+                 await reviewPullRequest(owner, repoName, prNumber);
+                console.log(`Review Completed for ${repoName} #${prNumber}`);
+                } catch (error) {
+                 console.error(`Error reviewing ${repoName} #${prNumber}`, error);
+                }
             }
         }
 
