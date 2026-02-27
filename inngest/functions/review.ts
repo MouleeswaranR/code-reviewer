@@ -21,7 +21,7 @@ export const generateReview=inngest.createFunction(
                     providerId:"github"
                 }
             })
-
+            console.log("Account: ",account);
             if(!account?.accessToken){
                 throw new Error("No Github access token found");
             }

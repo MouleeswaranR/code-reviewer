@@ -13,7 +13,7 @@ export const auth = betterAuth({
         github:{
             clientId:process.env.GITHUB_CLIENT_ID!,
             clientSecret:process.env.GITHUB_CLIENT_SECRET,
-            scope:["repo"]
+            scope: ["repo", "user:email"],
         }
     },
     trustedOrigins:["http://localhost:3000"," https://steve-guard-code-reviewer.vercel.app/"],

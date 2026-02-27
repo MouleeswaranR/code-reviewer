@@ -20,9 +20,13 @@ export const getGithubToken=async()=>{
         }
     })
 
+    
     if(!account?.accessToken){
         throw new Error("No github access token found")
     }
+
+    console.log("got token");
+    
 
     return account.accessToken;
 }
