@@ -26,7 +26,7 @@ export const auth = betterAuth({
                     products: [
                         {
                             productId: "3de4c6d5-607a-4ca4-bd53-171d9cc81729",
-                            slug: "pro" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
+                            slug: "steve-guard" // Custom slug for easy reference in Checkout URL, e.g. /checkout/steve-guard-new-dev
                         }
                     ],
                     successUrl: process.env.POLAR_SUCCESS_URL||"/dashboard/subscription?success=true",
