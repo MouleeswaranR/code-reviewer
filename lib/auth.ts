@@ -16,7 +16,7 @@ export const auth = betterAuth({
             scope: ["repo", "user:email"],
         }
     },
-    trustedOrigins:["https://steve-guard-code-reviewer.vercel.app"], //"http://localhost:3000" if run locally
+    trustedOrigins:["https://steve-guard-code-reviewer.vercel.app","https://steve-guard-code-reviewer.vercel.app/"], //"http://localhost:3000" if run locally
     plugins:[
         polar({
           client: polarClient,
