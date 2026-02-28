@@ -149,6 +149,17 @@ export default function SubscriptionPage(){
         }
     }
 
+    const handleDowngrade = async () => {
+        try {
+            setPortalLoading(true);
+            await customer.portal(); 
+        } catch (error) {
+            console.error("Failed to open portal:", error);
+        } finally {
+            setPortalLoading(false);
+        }
+    };
+
     const handleManageSubscription=async()=>{
         try {
             setPortalLoading(true);
@@ -253,9 +264,25 @@ export default function SubscriptionPage(){
                                 </div>
                             ))}
                         </div>
-                        <Button className="w-full" variant="outline" disabled>
-                            {!isPro?"Current Plan":"Downgrade"}
-                        </Button>
+                        <Button
+                            className="w-full"
+                            variant="outline"
+                            onClick={isPro ? handleDowngrade : undefined}
+                            disabled={!isPro || portalLoading}
+                            >
+                            {isPro ? (
+                                portalLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Opening Portal...
+                                </>
+                                ) : (
+                                "Downgrade to Free"
+                                )
+                            ) : (
+                                "Current Plan"
+                            )}
+                         </Button>
                     </CardContent>
                 </Card>
 
