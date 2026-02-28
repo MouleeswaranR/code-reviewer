@@ -14,7 +14,7 @@ import {checkout,customer} from "@/lib/auth-client"
 import { getSubscriptionData, syncSubscriptionStatus } from "@/module/payment/action";
 import { Spinner } from "@/components/ui/spinner";
 import { features } from "process";
-import { refresh } from "next/cache";
+// import { refresh } from "next/cache";
 
 
 const PLAN_FEATURES={
@@ -50,20 +50,25 @@ export default function SubscriptionPage(){
         refetchOnWindowFocus:true
     })
 
-    useEffect(()=>{
-        if(success==="true"){
-            const sync=async()=>{
-                try {
-                    await syncSubscriptionStatus();
-                    refresh();
-                } catch (e) {
-                    console.error("Failed to sync subscription on success return",e);
-                    
-                }
-            }
-            sync()
+    useEffect(() => {
+  if (success === "true") {
+    const sync = async () => {
+      try {
+        const result = await syncSubscriptionStatus();
+
+        if (result?.success) {
+          await refetch();
+          toast.success("Subscription updated!");
         }
-    },[success,refetch]);
+
+      } catch (e) {
+        console.error("Failed to sync subscription on success return", e);
+      }
+    };
+
+    sync();
+  }
+}, [success]);
 
     if(isLoading){
         return (
