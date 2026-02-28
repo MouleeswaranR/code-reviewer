@@ -41,17 +41,36 @@ export const auth = betterAuth({
                 usage(),
                 webhooks({
                     secret:process.env.POLAR_WEBHOOK_SECRET!,
-                    onSubscriptionActive:async(payload)=>{
-                        const customerId=payload.data.customerId;
+                   onSubscriptionActive: async (payload) => {
+                    const customerId = payload.data.customerId;
 
-                        const user =await prisma.user.findUnique({
-                            where:{
-                                polarCustomerId:customerId
-                            }
+                    let user = await prisma.user.findUnique({
+                        where: { polarCustomerId: customerId }
+                    });
+
+                    // Fallback: if customerId not saved yet
+                    if (!user) {
+                        const customer = await polarClient.customers.get({
+                        id: customerId
                         });
-                        if(user){
-                            await updateUserTier(user.id,"PRO","ACTIVE",payload.data.id);
+
+                        user = await prisma.user.findUnique({
+                        where: { email: customer.email }
+                        });
+
+                        if (user) {
+                        await updatePolarCustomerId(user.id, customerId);
                         }
+                    }
+
+                    if (user) {
+                        await updateUserTier(
+                        user.id,
+                        "PRO",
+                        "ACTIVE",
+                        payload.data.id
+                        );
+                    }
                     },
                     onSubscriptionCanceled:async(payload)=>{
                         const customerId=payload.data.customerId;
