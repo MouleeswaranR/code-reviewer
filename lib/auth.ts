@@ -18,24 +18,6 @@ export const auth = betterAuth({
             scope: ["repo", "user:email"],
         }
     },
-    events: {
-        async onSignIn({ user }:{user:any}) {
-            try {
-            if (!user.polarCustomerId) {
-                const customer = await polarClient.customers.create({
-                email: user.email!,
-                name: user.name || undefined,
-                });
-
-                await updatePolarCustomerId(user.id, customer.id);
-                console.log("email:",user.email);
-                
-            }
-            } catch (err) {
-            console.error("Polar customer creation failed:", err);
-            }
-        },
-        },
 
     trustedOrigins:["https://steve-guard-code-reviewer.vercel.app","https://steve-guard-code-reviewer.vercel.app/"], //"http://localhost:3000" if run locally
     plugins:[
