@@ -13,6 +13,35 @@ It doesn't just generate feedback — it understands your entire codebase before
 
 > ⚠️ Important: Use the **same email for GitHub login and subscription** to ensure proper billing synchronization.
 
+## 💳 Test Card Details (Sandbox Mode)
+
+### ✅ Successful Payment
+
+**Card Number:**  
+```
+4242 4242 4242 4242
+```
+
+**Expiry Date:**  
+```
+Any future date (e.g., 12/30)
+```
+
+**CVC:**  
+```
+Any 3 digits (e.g., 123)
+```
+
+**Cardholder Name:**  
+```
+Anything
+```
+
+**ZIP / Postal Code:**  
+```
+Any 5 digits
+```
+
 ---
 
 # 🧠 What SteveGuard Does
@@ -22,7 +51,7 @@ It doesn't just generate feedback — it understands your entire codebase before
 - Generates structured AI feedback  
 - Posts review comments directly to GitHub  
 - Tracks usage and subscription limits  
-- Provides analytics dashboard  
+- Provides analytics dashboard  for your Github profile
 - Manages repositories and reviews  
 
 ---
