@@ -119,7 +119,7 @@ export default function SubscriptionPage(){
                 toast.error("Failed to sync subscription")
             }
         } catch (error) {
-            console.error("Failed to sync subscription ");
+            console.error("Failed to sync subscription: ",error);
             
         }finally{
             setSyncLoading(false);
@@ -130,11 +130,12 @@ export default function SubscriptionPage(){
         try {
             setCheckoutLoading(true);
             await checkout({
-                slug:"pro"
+                slug:"SteveGuard-AI-Github-Code-Reviewer"
             })
            
         } catch (error) {
             console.error("Failed to initiate checkout:",error);
+            console.log("Failed to initiate checkout:",error);
             setCheckoutLoading(false);
         }finally{
             setCheckoutLoading(false);
@@ -148,6 +149,7 @@ export default function SubscriptionPage(){
             
         } catch (error) {
             console.error("Failed to open portal:",error);
+            console.log("Failed to open portal:",error);
             setPortalLoading(false);
         }finally{
             setPortalLoading(false);
