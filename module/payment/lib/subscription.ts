@@ -175,7 +175,7 @@ export async function updateUserTier(userId:string,
         data:{
             subscriptionTier:tier,
             subscriptionStatus:status,
-            // polarSubscriprionId
+            polarSubscriptionId: polarSubscriprionId 
         }
     })
     

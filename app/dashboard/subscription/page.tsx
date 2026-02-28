@@ -44,11 +44,13 @@ export default function SubscriptionPage(){
     const searchParams=useSearchParams();
     const success=searchParams.get("success");
 
-    const {data,isLoading,error,refetch}=useQuery({
-        queryKey:["subscription-data"],
-        queryFn:getSubscriptionData,
-        refetchOnWindowFocus:true
-    })
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ["subscription-data"],
+        queryFn: getSubscriptionData,
+        staleTime: 0,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        });
 
     useEffect(() => {
   if (success === "true") {
