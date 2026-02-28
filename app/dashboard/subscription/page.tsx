@@ -262,7 +262,7 @@ export default function SubscriptionPage(){
                             {isPro && <Badge className="ml-2">Current Plan</Badge>}
                         </div>
                         <div className="mt-2">
-                            <span className="text-3xl font-bold">$29.99</span>
+                            <span className="text-3xl font-bold">$5</span>
                             <span className="text-muted-foreground">/month</span>
                         </div>
                     </CardHeader>
