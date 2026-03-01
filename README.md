@@ -78,7 +78,7 @@ Any 5 digits
 
 ## 🧠 AI & RAG
 - Google Gemini 2.5 Flash  
-- text-embedding-004  
+- gemini-embedding-001  
 - Pinecone (Vector Database)
 
 ## 🔁 Background Jobs
